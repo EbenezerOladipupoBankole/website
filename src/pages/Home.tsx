@@ -71,12 +71,38 @@ const featuredJobs = [
     }
 ];
 
+import { auth, db } from '../services/firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
+
 const Home: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [activeTab, setActiveTab] = useState<'talent' | 'employer'>('talent');
+    const [userRole, setUserRole] = useState<'talent' | 'employer' | null>(null);
     const [realJobs, setRealJobs] = useState<Job[]>([]);
     const [isLoadingJobs, setIsLoadingJobs] = useState(true);
     const revealRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                try {
+                    const userRef = doc(db, 'users', user.uid);
+                    const userSnap = await getDoc(userRef);
+                    if (userSnap.exists()) {
+                        const role = userSnap.data()?.role;
+                        setUserRole(role);
+                        setActiveTab(role || 'talent');
+                    }
+                } catch (err) {
+                    console.error("Error fetching user role:", err);
+                }
+            } else {
+                setUserRole(null);
+            }
+        });
+        return () => unsubscribe();
+    }, []);
 
     useEffect(() => {
         const fetchLatestJobs = async () => {
@@ -122,7 +148,13 @@ const Home: React.FC = () => {
             <header className="home-hero-v2">
                 <div className="hero-overlay"></div>
                 <div className="container hero-content-v2 animate-fade-in">
-                    <h1 className="hero-title-v2">Find Your <span className="text-gradient">Dream Job</span></h1>
+                    <h1 className="hero-title-v2">
+                        {userRole === 'employer' ? (
+                            <>Find Top <span className="text-gradient">Local Talent</span></>
+                        ) : (
+                            <>Find Your <span className="text-gradient">Dream Job</span></>
+                        )}
+                    </h1>
 
                     <div className="quick-categories">
                         {categories.slice(0, 6).map((cat, i) => (
@@ -135,7 +167,7 @@ const Home: React.FC = () => {
                             <i className="fas fa-search"></i>
                             <input
                                 type="text"
-                                placeholder="Job title, keywords, or company..."
+                                placeholder={userRole === 'employer' ? "Search for skills, roles, or talents..." : "Job title, keywords, or company..."}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
@@ -146,8 +178,12 @@ const Home: React.FC = () => {
                             <input type="text" placeholder="Abeokuta, Nigeria" readOnly />
                         </div>
                         <button className="btn-search-v2" onClick={() => {
-                            document.querySelector('.jobs-section')?.scrollIntoView({ behavior: 'smooth' });
-                        }}>Search</button>
+                            if (userRole === 'employer') {
+                                window.location.href = '/browse-talent';
+                            } else {
+                                document.querySelector('.jobs-section')?.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        }}>{userRole === 'employer' ? 'Search Talent' : 'Search Jobs'}</button>
                     </div>
                 </div>
             </header>
@@ -378,9 +414,25 @@ const Home: React.FC = () => {
             <section className="cta-banner scroll-reveal" ref={addToRefs}>
                 <div className="container">
                     <div className="cta-content glass">
-                        <h2>Ready to post a job?</h2>
-                        <p>Join thousands of employers finding top talent on ViteHire.</p>
-                        <button className="btn-primary-v2">Get Started for Free</button>
+                        {userRole === 'employer' ? (
+                            <>
+                                <h2>Ready to scale your team?</h2>
+                                <p>Join thousands of employers finding top talent on ViteHire.</p>
+                                <button className="btn-primary-v2" onClick={() => window.location.href='/post-job'}>Post a Job for Free</button>
+                            </>
+                        ) : userRole === 'talent' ? (
+                            <>
+                                <h2>Ready for your next opportunity?</h2>
+                                <p>Build a stunning profile and get noticed by companies in Abeokuta.</p>
+                                <button className="btn-primary-v2" onClick={() => window.location.href='/jobs'}>Explore All Jobs</button>
+                            </>
+                        ) : (
+                            <>
+                                <h2>Ready to post a job?</h2>
+                                <p>Join thousands of employers finding top talent on ViteHire.</p>
+                                <button className="btn-primary-v2" onClick={() => window.location.href='/login'}>Get Started for Free</button>
+                            </>
+                        )}
                     </div>
                 </div>
             </section>
