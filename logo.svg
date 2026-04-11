@@ -1,8 +1,6 @@
-<svg width="160" height="40" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- Icon Background -->
   <rect width="40" height="40" rx="12" fill="#3B82F6"/>
   <!-- Icon Letter V -->
   <text x="20" y="27" text-anchor="middle" fill="white" style="font-family: 'Outfit', 'Inter', sans-serif; font-weight: 900; font-size: 24px;">V</text>
-  <!-- Brand Name -->
-  <text x="52" y="28" fill="#0F172A" style="font-family: 'Outfit', 'Inter', sans-serif; font-weight: 900; font-size: 24px; letter-spacing: -0.03em;">ViteHire</text>
 </svg>

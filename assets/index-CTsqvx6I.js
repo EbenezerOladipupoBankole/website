@@ -308,6 +308,7 @@ ${i.bio}
                 @media (max-width: 1023px) {
                     .gateway-container {
                         flex-direction: column;
+                        padding-top: 100px;
                     }
 
                     .branding-center {
@@ -317,8 +318,9 @@ ${i.bio}
                     .pane {
                         flex: none;
                         width: 100%;
-                        min-height: 50vh;
+                        min-height: 45vh;
                         border-right: none;
+                        padding: 40px 20px;
                     }
 
                     .pane-talent {
