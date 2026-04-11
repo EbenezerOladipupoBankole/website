@@ -126,49 +126,49 @@ ${formData.bio}
                     <form onSubmit={handleSubmit} style={{ padding: '32px' }}>
                         {error && <div style={{ color: 'var(--error)', marginBottom: '20px', fontWeight: 600 }}>{error}</div>}
 
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
+                        <div className="form-grid" style={{ marginBottom: '32px' }}>
                             <div style={{ display: 'grid', gap: '8px' }}>
-                                <label style={{ fontWeight: 600 }}>Full Name</label>
+                                <label style={{ fontWeight: 600, fontSize: '15px', color: 'var(--primary)' }}>Full Name</label>
                                 <input
                                     type="text"
                                     required
                                     value={formData.fullName}
                                     onChange={e => setFormData({ ...formData, fullName: e.target.value })}
                                     placeholder="e.g. Adewale Johnson"
-                                    style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--border)' }}
+                                    style={{ padding: '16px 20px', borderRadius: '12px', border: '1px solid var(--border)', fontSize: '16px', outline: 'none' }}
                                 />
                             </div>
                             <div style={{ display: 'grid', gap: '8px' }}>
-                                <label style={{ fontWeight: 600 }}>Email Address</label>
+                                <label style={{ fontWeight: 600, fontSize: '15px', color: 'var(--primary)' }}>Email Address</label>
                                 <input
                                     type="email"
                                     required
                                     value={formData.email}
                                     onChange={e => setFormData({ ...formData, email: e.target.value })}
                                     placeholder="e.g. adewale@example.com"
-                                    style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--border)' }}
+                                    style={{ padding: '16px 20px', borderRadius: '12px', border: '1px solid var(--border)', fontSize: '16px', outline: 'none' }}
                                 />
                             </div>
                         </div>
 
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
+                        <div className="form-grid" style={{ marginBottom: '32px' }}>
                             <div style={{ display: 'grid', gap: '8px' }}>
-                                <label style={{ fontWeight: 600 }}>Phone Number</label>
+                                <label style={{ fontWeight: 600, fontSize: '15px', color: 'var(--primary)' }}>Phone Number</label>
                                 <input
                                     type="tel"
                                     required
                                     value={formData.phone}
                                     onChange={e => setFormData({ ...formData, phone: e.target.value })}
                                     placeholder="e.g. 08012345678"
-                                    style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--border)' }}
+                                    style={{ padding: '16px 20px', borderRadius: '12px', border: '1px solid var(--border)', fontSize: '16px', outline: 'none' }}
                                 />
                             </div>
                             <div style={{ display: 'grid', gap: '8px' }}>
-                                <label style={{ fontWeight: 600 }}>Location (City)</label>
+                                <label style={{ fontWeight: 600, fontSize: '15px', color: 'var(--primary)' }}>Location (City)</label>
                                 <select
                                     value={formData.location}
                                     onChange={e => setFormData({ ...formData, location: e.target.value })}
-                                    style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--border)' }}
+                                    style={{ padding: '16px 20px', borderRadius: '12px', border: '1px solid var(--border)', fontSize: '16px', outline: 'none', background: 'white' }}
                                 >
                                     <option>Abeokuta</option>
                                     <option>Lagos</option>
@@ -180,17 +180,17 @@ ${formData.bio}
                             </div>
                         </div>
 
-                        <div style={{ margin: '32px -32px', borderTop: '1px solid var(--border)' }}></div>
+                        <div style={{ margin: '40px -32px', borderTop: '1px solid var(--border)' }}></div>
 
-                        <h3 style={{ marginBottom: '24px' }}>Professional Profile</h3>
+                        <h3 style={{ marginBottom: '32px', fontSize: '24px' }}>Professional Profile</h3>
 
-                        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px', marginBottom: '24px' }}>
+                        <div className="form-grid" style={{ marginBottom: '32px' }}>
                             <div style={{ display: 'grid', gap: '8px' }}>
-                                <label style={{ fontWeight: 600 }}>Category</label>
+                                <label style={{ fontWeight: 600, fontSize: '15px', color: 'var(--primary)' }}>Category</label>
                                 <select
-                                    value={formData.category} // Using category for role broad type
+                                    value={formData.category}
                                     onChange={e => setFormData({ ...formData, category: e.target.value })}
-                                    style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--border)' }}
+                                    style={{ padding: '16px 20px', borderRadius: '12px', border: '1px solid var(--border)', fontSize: '16px', outline: 'none', background: 'white' }}
                                 >
                                     <option value="IT & Software">IT & Software</option>
                                     <option value="Sales">Sales</option>
@@ -200,11 +200,11 @@ ${formData.bio}
                                 </select>
                             </div>
                             <div style={{ display: 'grid', gap: '8px' }}>
-                                <label style={{ fontWeight: 600 }}>Experience Level</label>
+                                <label style={{ fontWeight: 600, fontSize: '15px', color: 'var(--primary)' }}>Experience Level</label>
                                 <select
                                     value={formData.experience}
                                     onChange={e => setFormData({ ...formData, experience: e.target.value })}
-                                    style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--border)' }}
+                                    style={{ padding: '16px 20px', borderRadius: '12px', border: '1px solid var(--border)', fontSize: '16px', outline: 'none', background: 'white' }}
                                 >
                                     <option>Intern / Student</option>
                                     <option>Entry Level (0-2 years)</option>
@@ -215,77 +215,80 @@ ${formData.bio}
                             </div>
                         </div>
 
-                        <div style={{ display: 'grid', gap: '8px', marginBottom: '24px' }}>
-                            <label style={{ fontWeight: 600 }}>Specific Job Title</label>
+                        <div style={{ display: 'grid', gap: '8px', marginBottom: '32px' }}>
+                            <label style={{ fontWeight: 600, fontSize: '15px', color: 'var(--primary)' }}>Specific Job Title</label>
                             <input
                                 type="text"
                                 required
                                 value={formData.role}
                                 onChange={e => setFormData({ ...formData, role: e.target.value })}
                                 placeholder="e.g. Sales Specialist"
-                                style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--border)' }}
+                                style={{ padding: '16px 20px', borderRadius: '12px', border: '1px solid var(--border)', fontSize: '16px', outline: 'none' }}
                             />
                         </div>
 
-                        <div style={{ display: 'grid', gap: '8px', marginBottom: '24px' }}>
-                            <label style={{ fontWeight: 600 }}>Skills (Press Enter to add)</label>
+                        <div style={{ display: 'grid', gap: '8px', marginBottom: '32px' }}>
+                            <label style={{ fontWeight: 600, fontSize: '15px', color: 'var(--primary)' }}>Skills (Press Enter to add)</label>
                             <input
                                 type="text"
                                 value={skillInput}
                                 onChange={e => setSkillInput(e.target.value)}
                                 onKeyDown={handleAddSkill}
                                 placeholder="e.g. Excel, Customer Service, React..."
-                                style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--border)' }}
+                                style={{ padding: '16px 20px', borderRadius: '12px', border: '1px solid var(--border)', fontSize: '16px', outline: 'none' }}
                             />
-                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '8px' }}>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '12px' }}>
                                 {skills.map((skill, index) => (
                                     <span key={index} style={{
                                         background: 'var(--accent)',
                                         color: 'white',
-                                        padding: '6px 14px',
+                                        padding: '8px 18px',
                                         borderRadius: '100px',
                                         fontSize: '14px',
+                                        fontWeight: 600,
                                         display: 'flex',
                                         alignItems: 'center',
-                                        gap: '6px'
+                                        gap: '8px',
+                                        boxShadow: '0 4px 12px rgba(59, 130, 246, 0.2)'
                                     }}>
                                         {skill}
                                         <button
                                             type="button"
                                             onClick={() => removeSkill(skill)}
-                                            style={{ background: 'transparent', border: 'none', color: 'white', cursor: 'pointer', padding: 0, fontSize: '16px' }}
+                                            style={{ background: 'transparent', border: 'none', color: 'white', cursor: 'pointer', padding: 0, fontSize: '18px', display: 'flex', alignItems: 'center' }}
                                         >×</button>
                                     </span>
                                 ))}
                             </div>
                         </div>
 
-                        <div style={{ display: 'grid', gap: '8px', marginBottom: '24px' }}>
-                            <label style={{ fontWeight: 600 }}>Upload Resume/CV (PDF Only)</label>
+                        <div style={{ display: 'grid', gap: '8px', marginBottom: '32px' }}>
+                            <label style={{ fontWeight: 600, fontSize: '15px', color: 'var(--primary)' }}>Upload Resume/CV (PDF Only)</label>
                             <input
                                 type="file"
                                 accept=".pdf"
                                 onChange={handleFileChange}
                                 required
                                 style={{
-                                    padding: '12px',
-                                    borderRadius: '8px',
-                                    border: '1px solid var(--border)',
-                                    background: 'white',
-                                    width: '100%'
+                                    padding: '24px',
+                                    borderRadius: '12px',
+                                    border: '2px dashed var(--border)',
+                                    background: 'var(--surface-secondary)',
+                                    width: '100%',
+                                    cursor: 'pointer'
                                 }}
                             />
-                            <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Required. PDF format only (Max 5MB)</span>
+                            <span style={{ fontSize: '13px', color: 'var(--text-muted)', marginTop: '8px' }}>Required. PDF format only (Max 5MB)</span>
                         </div>
 
-                        <div style={{ display: 'grid', gap: '8px', marginBottom: '32px' }}>
-                            <label style={{ fontWeight: 600 }}>Professional Bio</label>
+                        <div style={{ display: 'grid', gap: '8px', marginBottom: '40px' }}>
+                            <label style={{ fontWeight: 600, fontSize: '15px', color: 'var(--primary)' }}>Professional Bio</label>
                             <textarea
-                                rows={5}
+                                rows={6}
                                 value={formData.bio}
                                 onChange={e => setFormData({ ...formData, bio: e.target.value })}
-                                placeholder="Tell us about yourself..."
-                                style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--border)', fontFamily: 'inherit', resize: 'vertical' }}
+                                placeholder="Tell us about your professional journey, achievements, and what you’re looking for..."
+                                style={{ padding: '16px 20px', borderRadius: '12px', border: '1px solid var(--border)', fontSize: '16px', fontFamily: 'inherit', resize: 'vertical', outline: 'none', lineHeight: 1.6 }}
                             />
                         </div>
 
@@ -294,9 +297,9 @@ ${formData.bio}
                                 type="submit"
                                 disabled={isSubmitting}
                                 className="btn-primary"
-                                style={{ padding: '16px 48px', fontSize: '18px' }}
+                                style={{ padding: '18px 64px', fontSize: '18px', borderRadius: '14px', transform: 'none' }}
                             >
-                                {isSubmitting ? 'Uploading Profile...' : 'Join Talent Pool'}
+                                {isSubmitting ? 'Uploading Profile...' : 'Create My Professional Profile'}
                             </button>
                         </div>
                     </form>

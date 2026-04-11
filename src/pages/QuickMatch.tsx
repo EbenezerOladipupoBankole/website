@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../services/api';
 import { useNavigate } from 'react-router-dom';
+import { auth } from '../services/firebase';
 
 interface Job {
     _id: string;
@@ -10,7 +11,6 @@ interface Job {
     jobType: string;
     category: string;
     requirements: string;
-    whatsappContact: string;
     createdAt: any;
     logo?: string;
 }
@@ -21,14 +21,13 @@ const QuickMatch: React.FC = () => {
     const [swipeClass, setSwipeClass] = useState('');
     const [showMatch, setShowMatch] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchJobs = async () => {
             try {
                 const data = await api.getJobs();
-                // Filter out any jobs already seen if we had a tracking system
-                // For now, just load them all
                 setJobs(data as Job[]);
             } catch (err) {
                 console.error("Match error:", err);
@@ -39,17 +38,35 @@ const QuickMatch: React.FC = () => {
         fetchJobs();
     }, []);
 
-    const handleSwipe = (direction: 'left' | 'right') => {
+    const handleSwipe = async (direction: 'left' | 'right') => {
         setSwipeClass(`swipe-${direction}`);
 
-        setTimeout(() => {
-            if (direction === 'right') {
-                // In a real app, this would trigger an application in the DB
-                setShowMatch(true);
-            } else {
+        if (direction === 'right') {
+            setIsSubmitting(true);
+            try {
+                // Submit a quick application with current user details if available
+                // In a full implementation, this uses the user's saved profile/CV
+                const formData = new FormData();
+                formData.append('fullName', auth.currentUser?.displayName || 'Anonymous Candidate');
+                formData.append('email', auth.currentUser?.email || 'N/A');
+                formData.append('phone', 'Captured via Profile');
+                
+                await api.submitApplication(jobs[currentIndex]._id, formData);
+                
+                setTimeout(() => {
+                    setShowMatch(true);
+                    setIsSubmitting(false);
+                }, 300);
+            } catch (err) {
+                console.error("Quick apply error:", err);
+                setIsSubmitting(false);
                 nextCard();
             }
-        }, 300);
+        } else {
+            setTimeout(() => {
+                nextCard();
+            }, 300);
+        }
     };
 
     const nextCard = () => {
@@ -123,23 +140,29 @@ const QuickMatch: React.FC = () => {
                         <h4 style={{ marginBottom: '8px' }}>Requirements:</h4>
                         <p>{currentJob.requirements}</p>
                     </div>
+
+                    {isSubmitting && (
+                        <div style={{ position: 'absolute', inset: 0, background: 'rgba(255,255,255,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 'inherit', zIndex: 100 }}>
+                            <div className="spinner"></div>
+                        </div>
+                    )}
                 </div>
 
                 {/* Match Overlay */}
                 {showMatch && (
                     <div className="match-overlay">
-                        <div className="match-popup">
-                            <h1>IT'S A MATCH!</h1>
-                            <p>You've applied for <strong>{currentJob.title}</strong> at <strong>{currentJob.companyName}</strong>!</p>
+                        <div className="match-popup" style={{ background: 'white', padding: '48px', borderRadius: '32px', boxShadow: '0 30px 60px rgba(0,0,0,0.3)', color: 'var(--primary)' }}>
+                            <div style={{ fontSize: '64px', marginBottom: '20px' }}>🎯</div>
+                            <h1 style={{ color: 'var(--primary)', WebkitTextFillColor: 'initial', fontSize: '40px' }}>APPLICATION SENT!</h1>
+                            <p style={{ color: 'var(--text-secondary)', fontSize: '18px', maxWidth: '400px', margin: '0 auto 32px' }}>
+                                You've successfully applied for <strong>{currentJob.title}</strong> at <strong>{currentJob.companyName}</strong> using your profile.
+                            </p>
                             <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
-                                <button className="btn-primary" onClick={() => {
-                                    window.open(`https://wa.me/${currentJob.whatsappContact}?text=Hi, I applied for the ${currentJob.title} role via ViteHire Match!`, '_blank');
-                                    nextCard();
-                                }}>
-                                    Message Employer
-                                </button>
-                                <button className="btn-secondary" onClick={nextCard}>
+                                <button className="btn-primary" onClick={nextCard} style={{ padding: '16px 40px' }}>
                                     Keep Swiping
+                                </button>
+                                <button className="btn-secondary" onClick={() => navigate('/jobs')} style={{ padding: '16px 40px' }}>
+                                    Browse More
                                 </button>
                             </div>
                         </div>
@@ -148,13 +171,13 @@ const QuickMatch: React.FC = () => {
             </div>
 
             <div className="swipe-actions">
-                <button className="swipe-btn btn-dislike" onClick={() => handleSwipe('left')}>
+                <button className="swipe-btn btn-dislike" onClick={() => handleSwipe('left')} disabled={isSubmitting}>
                     <i className="fas fa-times"></i>
                 </button>
-                <button className="swipe-btn btn-undo" onClick={() => setCurrentIndex(0)}>
+                <button className="swipe-btn btn-undo" onClick={() => setCurrentIndex(0)} disabled={isSubmitting}>
                     <i className="fas fa-undo"></i>
                 </button>
-                <button className="swipe-btn btn-like" onClick={() => handleSwipe('right')}>
+                <button className="swipe-btn btn-like" onClick={() => handleSwipe('right')} disabled={isSubmitting}>
                     <i className="fas fa-heart"></i>
                 </button>
             </div>

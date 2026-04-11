@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { api } from '../services/api';
+import { useNavigate } from 'react-router-dom';
+import { auth, db } from '../services/firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
 
 // Interface for Job matching backend/api
 interface Job {
@@ -10,7 +14,6 @@ interface Job {
     jobType: string;
     category: string;
     requirements: string;
-    whatsappContact: string;
     createdAt: any;
 }
 
@@ -31,7 +34,7 @@ const categories = [
 
 const featuredJobs = [
     {
-        id: 1,
+        id: "feat-1",
         title: "Senior Frontend Developer",
         company: "TechFlow Abeokuta",
         location: "Abeokuta, Ogun",
@@ -40,11 +43,10 @@ const featuredJobs = [
         expiry: "In 14 days",
         description: "We are looking for a passionate React developer to lead our frontend team. You will be responsible for building high-quality, scalable web applications.",
         requirements: ["5+ years React experience", "Strong CSS/HTML knowledge", "Leadership experience"],
-        whatsapp: "2348000000000",
         logo: "🚀"
     },
     {
-        id: 2,
+        id: "feat-2",
         title: "Marketing Manager",
         company: "Rock City Media",
         location: "Onikolobo, Abeokuta",
@@ -53,11 +55,10 @@ const featuredJobs = [
         expiry: "In 7 days",
         description: "Join our dynamic team to drive growth for local businesses through innovative digital marketing strategies.",
         requirements: ["Social Media Management", "Content Strategy", "SEO/SEM Basics"],
-        whatsapp: "2348000000000",
         logo: "📈"
     },
     {
-        id: 3,
+        id: "feat-3",
         title: "Operations Intern",
         company: "Green Logistics",
         location: "Sagamu Interchange",
@@ -66,14 +67,9 @@ const featuredJobs = [
         expiry: "In 2 days",
         description: "Perfect opportunity for recent graduates to learn logistics operations and supply chain management.",
         requirements: ["Strong organization skills", "Basic Excel knowledge", "Fast learner"],
-        whatsapp: "2348000000000",
         logo: "📦"
     }
 ];
-
-import { auth, db } from '../services/firebase';
-import { doc, getDoc } from 'firebase/firestore';
-import { onAuthStateChanged } from 'firebase/auth';
 
 const Home: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState("");
@@ -82,6 +78,7 @@ const Home: React.FC = () => {
     const [realJobs, setRealJobs] = useState<Job[]>([]);
     const [isLoadingJobs, setIsLoadingJobs] = useState(true);
     const revealRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -101,7 +98,7 @@ const Home: React.FC = () => {
                 setUserRole(null);
             }
         });
-        return () => unsubscribe();
+        return unsubscribe;
     }, []);
 
     useEffect(() => {
@@ -179,9 +176,9 @@ const Home: React.FC = () => {
                         </div>
                         <button className="btn-search-v2" onClick={() => {
                             if (userRole === 'employer') {
-                                window.location.href = '/browse-talent';
+                                navigate('/browse-talent');
                             } else {
-                                document.querySelector('.jobs-section')?.scrollIntoView({ behavior: 'smooth' });
+                                navigate('/jobs');
                             }
                         }}>{userRole === 'employer' ? 'Search Talent' : 'Search Jobs'}</button>
                     </div>
@@ -221,14 +218,14 @@ const Home: React.FC = () => {
                                 <div className="step-arrow"><i className="fas fa-chevron-right"></i></div>
                                 <div className="step-item">
                                     <div className="step-number">02</div>
-                                    <h3>Apply & Get Vetted</h3>
-                                    <p>Apply to jobs you love and undergo our quick quality verification.</p>
+                                    <h3>Apply Internally</h3>
+                                    <p>Apply to jobs with a single click and manage your applications in one place.</p>
                                 </div>
                                 <div className="step-arrow"><i className="fas fa-chevron-right"></i></div>
                                 <div className="step-item">
                                     <div className="step-number">03</div>
                                     <h3>Swipe & Match</h3>
-                                    <p>Use our Tinder-style matching to apply for jobs instantly with a single swipe.</p>
+                                    <p>Use our Tinder-style matching to find and apply for roles instantly.</p>
                                 </div>
                             </div>
                         ) : (
@@ -241,8 +238,8 @@ const Home: React.FC = () => {
                                 <div className="step-arrow"><i className="fas fa-chevron-right"></i></div>
                                 <div className="step-item">
                                     <div className="step-number">02</div>
-                                    <h3>Review Top Talent</h3>
-                                    <p>Browse through pre-vetted candidates and interview the best fits.</p>
+                                    <h3>Review Applications</h3>
+                                    <p>Browse through incoming applications and pre-vetted candidates.</p>
                                 </div>
                                 <div className="step-arrow"><i className="fas fa-chevron-right"></i></div>
                                 <div className="step-item">
@@ -305,9 +302,7 @@ const Home: React.FC = () => {
                                                 const inner = e.currentTarget.closest('.job-card-inner');
                                                 inner?.classList.add('is-flipped');
                                             }}>More Info</button>
-                                            <button className="btn-apply-v2" onClick={() => {
-                                                window.open(`https://wa.me/${job.whatsapp}?text=Hi, I am interested in the ${job.title} role at ${job.company}.`, '_blank');
-                                            }}>Apply Now</button>
+                                            <button className="btn-apply-v2" onClick={() => navigate('/jobs')}>Apply Now</button>
                                         </div>
                                     </div>
 
@@ -328,9 +323,7 @@ const Home: React.FC = () => {
                                                 const inner = e.currentTarget.closest('.job-card-inner');
                                                 inner?.classList.remove('is-flipped');
                                             }}>Back</button>
-                                            <button className="btn-apply-v2" onClick={() => {
-                                                window.open(`https://wa.me/${job.whatsapp}?text=Hi, I am interested in the ${job.title} role at ${job.company}.`, '_blank');
-                                            }}>Apply Now</button>
+                                            <button className="btn-apply-v2" onClick={() => navigate('/jobs')}>Apply Now</button>
                                         </div>
                                     </div>
                                 </div>
@@ -357,15 +350,13 @@ const Home: React.FC = () => {
                                     </div>
                                     <div className="row-right">
                                         <span className="row-salary">{job.jobType}</span>
-                                        <a
-                                            href={`https://wa.me/${job.whatsappContact}?text=Hi, I am interested in the ${job.title} role at ${job.companyName}.`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
+                                        <button
+                                            onClick={() => navigate('/jobs')}
                                             className="btn-view-small"
-                                            style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}
+                                            style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', border: 'none', cursor: 'pointer' }}
                                         >
                                             Apply
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>
                             ))
@@ -418,19 +409,19 @@ const Home: React.FC = () => {
                             <>
                                 <h2>Ready to scale your team?</h2>
                                 <p>Join thousands of employers finding top talent on ViteHire.</p>
-                                <button className="btn-primary-v2" onClick={() => window.location.href='/post-job'}>Post a Job for Free</button>
+                                <button className="btn-primary-v2" onClick={() => navigate('/post-job')}>Post a Job for Free</button>
                             </>
                         ) : userRole === 'talent' ? (
                             <>
                                 <h2>Ready for your next opportunity?</h2>
                                 <p>Build a stunning profile and get noticed by companies in Abeokuta.</p>
-                                <button className="btn-primary-v2" onClick={() => window.location.href='/jobs'}>Explore All Jobs</button>
+                                <button className="btn-primary-v2" onClick={() => navigate('/jobs')}>Explore All Jobs</button>
                             </>
                         ) : (
                             <>
                                 <h2>Ready to post a job?</h2>
                                 <p>Join thousands of employers finding top talent on ViteHire.</p>
-                                <button className="btn-primary-v2" onClick={() => window.location.href='/login'}>Get Started for Free</button>
+                                <button className="btn-primary-v2" onClick={() => navigate('/login')}>Get Started for Free</button>
                             </>
                         )}
                     </div>

@@ -15,6 +15,9 @@ export const jobsCollection = collection(db, 'jobs');
 // Talents Collection
 export const talentsCollection = collection(db, 'talents');
 
+// Applications Collection
+export const applicationsCollection = collection(db, 'applications');
+
 export const api = {
     // Jobs
     getJobs: async () => {
@@ -77,6 +80,32 @@ export const api = {
             category,
             skillsSummary,
             cvPath: cvUrl,
+            createdAt: Timestamp.now()
+        });
+
+        return { _id: docRef.id };
+    },
+
+    submitApplication: async (jobId: string, formData: FormData) => {
+        const fullName = formData.get('fullName') as string;
+        const email = formData.get('email') as string;
+        const phone = formData.get('phone') as string;
+        const resumeFile = formData.get('resume') as File;
+
+        let resumeUrl = '';
+        if (resumeFile) {
+            const storageRef = ref(storage, `applications/${Date.now()}_${resumeFile.name}`);
+            await uploadBytes(storageRef, resumeFile);
+            resumeUrl = await getDownloadURL(storageRef);
+        }
+
+        const docRef = await addDoc(applicationsCollection, {
+            jobId,
+            fullName,
+            email,
+            phone,
+            resumeUrl,
+            status: 'pending',
             createdAt: Timestamp.now()
         });
 

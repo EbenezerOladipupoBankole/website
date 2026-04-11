@@ -2446,8 +2446,74 @@
   text-transform: uppercase;
   font-weight: 800;
 }
+/* Navbar Responsive Fixes */
+.mobile-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--primary);
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1001;
+  padding: 8px;
+}
+
+@media (max-width: 991px) {
+  .nav {
+    padding: 0 20px;
+    height: 70px;
+  }
+
+  .mobile-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+    flex-direction: column;
+    padding: 40px 24px;
+    gap: 24px;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 999;
+    border-top: 1px solid var(--border);
+    overflow-y: auto;
+    display: flex; /* Always flex but hidden via transform */
+  }
+
+  .nav-links-open {
+    transform: translateX(0);
+  }
+
+  .nav-links a {
+    font-size: 18px;
+    width: 100%;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--surface-secondary);
+  }
+
+  .nav-actions {
+    display: none !important;
+  }
+
+  .mobile-actions {
+    display: flex !important;
+    width: 100%;
+    margin-top: 12px;
+  }
+}
+
 /* Global Responsive Fixes */
 @media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+
   .hero-title-v2 {
     font-size: 2.2rem;
     padding: 0 15px;
@@ -2457,19 +2523,15 @@
     padding: 100px 0 60px;
   }
 
-  .features-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
+  .features-grid, .jobs-grid, .steps-grid, .talent-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
   }
 
   .quick-categories {
     justify-content: center;
-    gap: 10px;
-  }
-
-  .category-pill {
-    font-size: 13px;
-    padding: 8px 16px;
+    gap: 8px;
+    flex-wrap: wrap;
   }
 
   .main-content {
@@ -2479,6 +2541,37 @@
   .section-title {
     font-size: 28px;
     margin-bottom: 40px;
+  }
+
+  .card {
+    padding: 24px !important;
+  }
+
+  /* Form & Input Responsiveness */
+  .search-container-v2 {
+    flex-direction: column !important;
+    padding: 16px !important;
+  }
+
+  .search-divider {
+    display: none !important;
+  }
+
+  .search-input-group {
+    width: 100% !important;
+    padding: 4px 0 !important;
+  }
+
+  .btn-search-v2, .btn-primary {
+    width: 100% !important;
+    margin: 8px 0 0 0 !important;
+  }
+
+  /* Application Modal Fix */
+  .modal-content-glass {
+    width: 95% !important;
+    padding: 24px !important;
+    max-height: 95vh;
   }
 }
 
@@ -2495,20 +2588,35 @@
     font-size: 1.8rem;
   }
 
-  .btn-search {
-    padding: 10px 20px;
-    width: 100%;
+  .page-title {
+    font-size: 24px;
   }
 
-  .search-box {
-    flex-direction: column;
-    padding: 15px;
-    gap: 15px;
-    border-radius: 20px;
+  .page-subtitle {
+    font-size: 14px;
   }
 
-  .search-box input {
-    padding: 10px 0;
-    text-align: center;
+  .swipe-card {
+    padding: 24px;
+  }
+
+  .card-company-logo {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+  }
+}
+
+/* Form Helper Classes */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 }

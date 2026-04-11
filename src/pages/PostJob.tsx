@@ -7,12 +7,11 @@ const PostJob: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [jobData, setJobData] = useState({
         title: '',
-        companyName: '', // Changed to match backend
-        category: 'IT & Software', // Added default
+        companyName: '', 
+        category: 'IT & Software', 
         jobType: 'Full-time',
         description: '',
-        requirements: '', // Added
-        whatsappContact: '' // Added
+        requirements: '', 
     });
 
     useEffect(() => {
@@ -60,7 +59,7 @@ const PostJob: React.FC = () => {
                             />
                         </div>
 
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+                        <div className="form-grid">
                             <div style={{ display: 'grid', gap: '8px' }}>
                                 <label style={{ fontWeight: 600 }}>Company Name</label>
                                 <input
@@ -88,7 +87,7 @@ const PostJob: React.FC = () => {
                             </div>
                         </div>
 
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px' }}>
                             <div style={{ display: 'grid', gap: '8px' }}>
                                 <label style={{ fontWeight: 600 }}>Category</label>
                                 <select
@@ -102,17 +101,6 @@ const PostJob: React.FC = () => {
                                     <option value="Logistics">Logistics</option>
                                     <option value="Other">Other</option>
                                 </select>
-                            </div>
-                            <div style={{ display: 'grid', gap: '8px' }}>
-                                <label style={{ fontWeight: 600 }}>WhatsApp Contact</label>
-                                <input
-                                    type="text"
-                                    required
-                                    value={jobData.whatsappContact}
-                                    onChange={e => setJobData({ ...jobData, whatsappContact: e.target.value })}
-                                    placeholder="e.g. 2348012345678"
-                                    style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--border)', background: 'rgba(255,255,255,0.8)' }}
-                                />
                             </div>
                         </div>
 

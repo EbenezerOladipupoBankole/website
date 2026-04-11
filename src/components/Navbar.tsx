@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { auth } from '../services/firebase';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 import type { User } from 'firebase/auth';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+    user: User | null;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ user }) => {
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
-    const [user, setUser] = useState<User | null>(null);
     const location = useLocation();
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser);
-        });
-        return () => unsubscribe();
-    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -41,6 +37,11 @@ const Navbar: React.FC = () => {
 
     const isHomePage = location.pathname === '/';
 
+    // Don't show Navbar on Gateway page if not logged in
+    if (!user && isHomePage) {
+        return null;
+    }
+
     return (
         <nav className={`nav ${scrolled ? 'nav-scrolled' : ''} ${menuOpen ? 'nav-open' : ''} ${isHomePage && !scrolled ? 'nav-transparent' : ''}`}>
             <div className="nav-container">
@@ -48,10 +49,12 @@ const Navbar: React.FC = () => {
                     <img src="/logo.svg" alt="ViteHire Logo" className="brand-logo-img" style={{ height: '40px' }} />
                 </Link>
 
-                {/* Mobile Toggle */}
-                <button className="mobile-toggle" onClick={() => setMenuOpen(!menuOpen)}>
-                    <i className={`fas ${menuOpen ? 'fa-times' : 'fa-bars'}`}></i>
-                </button>
+                {/* Mobile Toggle - Only show if logged in or on allowed pages */}
+                {user && (
+                    <button className="mobile-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+                        <i className={`fas ${menuOpen ? 'fa-times' : 'fa-bars'}`}></i>
+                    </button>
+                )}
 
                 <div className={`nav-links ${menuOpen ? 'nav-links-open' : ''}`}>
                     {user && (

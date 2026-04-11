@@ -67,32 +67,35 @@ const BrowseTalent: React.FC = () => {
                 </header>
 
                 {/* Filter Bar */}
-                <div className="card glass" style={{ marginBottom: '32px', padding: '20px', display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
-                    <div style={{ flex: 1, minWidth: '250px' }}>
+                <div className="search-container-v2 glass" style={{ marginBottom: '48px', padding: '12px', maxWidth: '900px', margin: '0 auto 48px' }}>
+                    <div className="search-input-group" style={{ flex: 2 }}>
+                        <i className="fas fa-search" style={{ color: 'var(--accent)', fontSize: '18px' }}></i>
                         <input
                             type="text"
-                            placeholder="Search by name or skills..."
+                            placeholder="Search by candidate name or skills..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            style={{
-                                width: '100%',
-                                padding: '12px',
-                                borderRadius: '8px',
-                                border: '1px solid var(--border)',
-                                fontSize: '16px'
-                            }}
+                            style={{ fontSize: '18px', padding: '16px' }}
                         />
                     </div>
-                    <div style={{ flex: 1, minWidth: '200px' }}>
+                    
+                    <div className="search-divider" style={{ height: '40px' }}></div>
+                    
+                    <div className="search-input-group" style={{ flex: 1 }}>
+                        <i className="fas fa-briefcase" style={{ color: 'var(--accent)', fontSize: '18px' }}></i>
                         <select
                             value={categoryFilter}
                             onChange={(e) => setCategoryFilter(e.target.value)}
-                            style={{
-                                width: '100%',
-                                padding: '12px',
-                                borderRadius: '8px',
-                                border: '1px solid var(--border)',
-                                fontSize: '16px'
+                            style={{ 
+                                border: 'none', 
+                                padding: '16px', 
+                                width: '100%', 
+                                fontSize: '18px', 
+                                outline: 'none', 
+                                background: 'transparent',
+                                cursor: 'pointer',
+                                color: 'var(--text-primary)',
+                                fontWeight: 500
                             }}
                         >
                             <option value="All">All Categories</option>
@@ -103,6 +106,20 @@ const BrowseTalent: React.FC = () => {
                             <option value="Other">Other</option>
                         </select>
                     </div>
+
+                    <button 
+                        className="btn-primary" 
+                        style={{ 
+                            padding: '16px 32px', 
+                            borderRadius: '12px', 
+                            fontSize: '16px',
+                            transform: 'none',
+                            background: 'var(--primary)',
+                            margin: '4px'
+                        }}
+                    >
+                        Filter
+                    </button>
                 </div>
 
                 {/* Talent Grid */}
@@ -172,7 +189,7 @@ const BrowseTalent: React.FC = () => {
                     justifyContent: 'center',
                     padding: '20px'
                 }} onClick={() => setSelectedProfile(null)}>
-                    <div className="card glass" style={{
+                    <div className="card glass modal-content-glass" style={{
                         width: '100%',
                         maxWidth: '700px',
                         maxHeight: '90vh',
