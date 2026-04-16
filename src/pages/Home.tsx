@@ -36,26 +36,26 @@ const featuredJobs = [
     {
         id: "feat-1",
         title: "Senior Frontend Developer",
-        company: "TechFlow Abeokuta",
-        location: "Abeokuta, Ogun",
+        company: "TechFlow Nigeria",
+        location: "Lagos, Nigeria",
         salary: "₦450k - ₦700k",
         type: "Full-time",
         expiry: "In 14 days",
         description: "We are looking for a passionate React developer to lead our frontend team. You will be responsible for building high-quality, scalable web applications.",
         requirements: ["5+ years React experience", "Strong CSS/HTML knowledge", "Leadership experience"],
-        logo: "🚀"
+        logo: <i className="fas fa-code"></i>
     },
     {
         id: "feat-2",
         title: "Marketing Manager",
-        company: "Rock City Media",
-        location: "Onikolobo, Abeokuta",
+        company: "Naija Media Group",
+        location: "Abuja, Nigeria",
         salary: "₦250k - ₦400k",
         type: "Remote",
         expiry: "In 7 days",
         description: "Join our dynamic team to drive growth for local businesses through innovative digital marketing strategies.",
         requirements: ["Social Media Management", "Content Strategy", "SEO/SEM Basics"],
-        logo: "📈"
+        logo: <i className="fas fa-chart-line"></i>
     },
     {
         id: "feat-3",
@@ -67,7 +67,7 @@ const featuredJobs = [
         expiry: "In 2 days",
         description: "Perfect opportunity for recent graduates to learn logistics operations and supply chain management.",
         requirements: ["Strong organization skills", "Basic Excel knowledge", "Fast learner"],
-        logo: "📦"
+        logo: <i className="fas fa-box"></i>
     }
 ];
 
@@ -159,12 +159,12 @@ const Home: React.FC = () => {
                         ))}
                     </div>
 
-                    <div className="search-container-v2 glass">
+                    <div className="search-container-v2">
                         <div className="search-input-group">
                             <i className="fas fa-search"></i>
                             <input
                                 type="text"
-                                placeholder={userRole === 'employer' ? "Search for skills, roles, or talents..." : "Job title, keywords, or company..."}
+
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
@@ -172,7 +172,7 @@ const Home: React.FC = () => {
                         <div className="search-divider"></div>
                         <div className="search-input-group">
                             <i className="fas fa-map-marker-alt"></i>
-                            <input type="text" placeholder="Abeokuta, Nigeria" readOnly />
+                            <input type="text" readOnly />
                         </div>
                         <button className="btn-search-v2" onClick={() => {
                             if (userRole === 'employer') {
@@ -276,55 +276,35 @@ const Home: React.FC = () => {
                     <div className="jobs-grid">
                         {featuredJobs.map(job => (
                             <div key={job.id} className="job-card-container">
-                                <div className="job-card-inner">
-                                    {/* Front of Card */}
-                                    <div className="job-card-v2 job-card-front glass">
-                                        <div className="job-card-header">
-                                            <div className="company-logo">{job.logo}</div>
-                                            <div className="job-meta-top">
-                                                <span className="job-type">{job.type}</span>
-                                                <span className="job-expiry">{job.expiry}</span>
-                                            </div>
-                                        </div>
-
-                                        <div className="job-card-body">
-                                            <h3 className="job-title-v2">{job.title}</h3>
-                                            <p className="job-company-v2">{job.company}</p>
-                                            <div className="job-details-v2">
-                                                <span><i className="fas fa-map-marker-alt"></i> {job.location}</span>
-                                                <span><i className="fas fa-money-bill-wave"></i> {job.salary}</span>
-                                            </div>
-                                            <p className="job-desc-v2">{job.description}</p>
-                                        </div>
-
-                                        <div className="job-card-footer">
-                                            <button className="btn-info" onClick={(e) => {
-                                                const inner = e.currentTarget.closest('.job-card-inner');
-                                                inner?.classList.add('is-flipped');
-                                            }}>More Info</button>
-                                            <button className="btn-apply-v2" onClick={() => navigate('/jobs')}>Apply Now</button>
+                                    <div className="job-card-v2 glass">
+                                    <div className="job-card-header">
+                                        <div className="company-logo">{job.logo}</div>
+                                        <div className="job-meta-top">
+                                            <span className="job-type">{job.type}</span>
+                                            <span className="job-expiry">{job.expiry}</span>
                                         </div>
                                     </div>
 
-                                    {/* Back of Card */}
-                                    <div className="job-card-v2 job-card-back glass">
-                                        <h3>Details & Skills</h3>
-                                        <p style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '16px' }}>{job.description}</p>
-                                        <div className="job-requirements">
-                                            <h4>Specific Requirements:</h4>
-                                            <ul>
+                                    <div className="job-card-body">
+                                        <h3 className="job-title-v2">{job.title}</h3>
+                                        <p className="job-company-v2">{job.company}</p>
+                                        <div className="job-details-v2">
+                                            <span><i className="fas fa-map-marker-alt"></i> {job.location}</span>
+                                            <span><i className="fas fa-money-bill-wave"></i> {job.salary}</span>
+                                        </div>
+                                        <p className="job-desc-v2" style={{ marginBottom: '16px' }}>{job.description}</p>
+                                        <div className="job-requirements" style={{ margin: '16px 0', padding: '12px', background: 'var(--surface-secondary)', borderRadius: '12px' }}>
+                                            <h4 style={{ fontSize: '12px', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '8px' }}>Requirements:</h4>
+                                            <ul style={{ paddingLeft: '16px', fontSize: '14px', color: 'var(--text-secondary)' }}>
                                                 {job.requirements?.map((req, idx) => (
-                                                    <li key={idx}>{req}</li>
+                                                    <li key={idx} style={{ marginBottom: '4px' }}>{req}</li>
                                                 ))}
                                             </ul>
                                         </div>
-                                        <div className="job-card-footer" style={{ marginTop: 'auto' }}>
-                                            <button className="btn-info" onClick={(e) => {
-                                                const inner = e.currentTarget.closest('.job-card-inner');
-                                                inner?.classList.remove('is-flipped');
-                                            }}>Back</button>
-                                            <button className="btn-apply-v2" onClick={() => navigate('/jobs')}>Apply Now</button>
-                                        </div>
+                                    </div>
+
+                                    <div className="job-card-footer">
+                                        <button className="btn-apply-v2" onClick={() => navigate('/jobs')} style={{ width: '100%' }}>View & Apply in Jobs</button>
                                     </div>
                                 </div>
                             </div>
@@ -342,10 +322,12 @@ const Home: React.FC = () => {
                             realJobs.slice(0, 5).map(job => (
                                 <div key={job._id} className="simple-job-row glass">
                                     <div className="row-left">
-                                        <div className="mini-logo">🚀</div>
+                                        <div className="mini-logo" style={{ fontWeight: 700, color: 'var(--accent)', background: 'rgba(59, 130, 246, 0.1)' }}>
+                                            {job.companyName.charAt(0).toUpperCase()}
+                                        </div>
                                         <div>
                                             <h4>{job.title}</h4>
-                                            <p>{job.companyName} • Abeokuta</p>
+                                            <p>{job.companyName} • Nigeria</p>
                                         </div>
                                     </div>
                                     <div className="row-right">
@@ -376,7 +358,7 @@ const Home: React.FC = () => {
                         <div className="learning-content">
                             <span className="badge-v2">Learning Hub</span>
                             <h2>Master French & Boost Your Career</h2>
-                            <p>Globalize your resume! Join our specialized French language programs designed for professionals in Abeokuta.</p>
+                            <p>Globalize your resume! Join our specialized French language programs designed for professionals in Nigeria.</p>
                             <ul className="learning-features">
                                 <li><i className="fas fa-check-circle"></i> Conversational French Classes</li>
                                 <li><i className="fas fa-check-circle"></i> DELF/DALF Exam Preparation</li>
@@ -414,7 +396,7 @@ const Home: React.FC = () => {
                         ) : userRole === 'talent' ? (
                             <>
                                 <h2>Ready for your next opportunity?</h2>
-                                <p>Build a stunning profile and get noticed by companies in Abeokuta.</p>
+                                <p>Build a stunning profile and get noticed by companies across Nigeria.</p>
                                 <button className="btn-primary-v2" onClick={() => navigate('/jobs')}>Explore All Jobs</button>
                             </>
                         ) : (

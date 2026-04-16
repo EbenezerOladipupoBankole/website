@@ -10,23 +10,37 @@ import BrowseTalent from './pages/BrowseTalent';
 import CareerBlogs from './pages/CareerBlogs';
 import InterviewTips from './pages/InterviewTips';
 import ResumeBuilder from './pages/ResumeBuilder';
-import LearningHub from './pages/LearningHub';
 import QuickMatch from './pages/QuickMatch';
 import Gateway from './pages/Gateway';
 import NotFound from './pages/NotFound';
 import './App.css';
 
-import { auth } from './services/firebase';
+import { auth, db } from './services/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 import type { User } from 'firebase/auth';
 import { useState, useEffect } from 'react';
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
+  const [userRole, setUserRole] = useState<'talent' | 'employer' | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
+      if (currentUser) {
+        try {
+          const userRef = doc(db, 'users', currentUser.uid);
+          const userSnap = await getDoc(userRef);
+          if (userSnap.exists()) {
+            setUserRole(userSnap.data()?.role || null);
+          }
+        } catch (err) {
+          console.error('Error fetching user role:', err);
+        }
+      } else {
+        setUserRole(null);
+      }
     });
     return () => unsubscribe();
   }, []);
@@ -34,12 +48,12 @@ function App() {
   return (
     <Router>
       <div className="app">
-        <Navbar user={user} />
+        <Navbar user={user} userRole={userRole} />
 
         <main className="content-wrapper">
           <Routes>
             <Route path="/" element={user ? <Home /> : <Gateway />} />
-            <Route path="/jobs" element={<Jobs />} />
+            <Route path="/jobs" element={<Jobs userRole={userRole} />} />
             <Route path="/talent" element={<Talent />} />
             <Route path="/employers" element={<Employers />} />
             <Route path="/post-job" element={<PostJob />} />
@@ -48,7 +62,7 @@ function App() {
             <Route path="/career-blogs" element={<CareerBlogs />} />
             <Route path="/interview-tips" element={<InterviewTips />} />
             <Route path="/resume-builder" element={<ResumeBuilder />} />
-            <Route path="/learning-hub" element={<LearningHub />} />
+
             <Route path="/match" element={<QuickMatch />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
@@ -59,9 +73,9 @@ function App() {
             <div className="footer-top container">
               <div className="footer-newsletter">
                 <h3>Stay updated with local opportunities</h3>
-                <p>Get the latest jobs and talent trends in Abeokuta delivered to your inbox.</p>
+                <p>Get the latest jobs and talent trends in Nigeria delivered to your inbox.</p>
                 <div className="newsletter-form">
-                  <input type="email" placeholder="Enter your email" />
+                  <input type="email" />
                   <button className="btn-primary">Subscribe</button>
                 </div>
 
@@ -97,7 +111,7 @@ function App() {
                   <img src="/logo.svg" alt="ViteHire Logo" style={{ height: '32px' }} />
                 </div>
                 <p className="brand-desc">
-                  Connecting top talent with the best companies in the Rock City.
+                  Connecting top talent with the best companies across Nigeria.
                   Your partner for local career growth and hiring success.
                 </p>
                 <div className="social-links">
@@ -108,34 +122,12 @@ function App() {
                 </div>
               </div>
 
-              <div className="footer-links-v2">
-                <div className="footer-col">
-                  <h4>Plateform</h4>
-                  <a href="/jobs"><i className="fas fa-chevron-right"></i> Find Jobs</a>
-                  <a href="/talent"><i className="fas fa-chevron-right"></i> Join Talent</a>
-                  <a href="/employers"><i className="fas fa-chevron-right"></i> Post a Job</a>
-                  <a href="#"><i className="fas fa-chevron-right"></i> Salary Calculator</a>
-                </div>
-                <div className="footer-col">
-                  <h4>Resources</h4>
-                  <a href="/career-blogs"><i className="fas fa-chevron-right"></i> Career Blogs</a>
-                  <a href="/interview-tips"><i className="fas fa-chevron-right"></i> Interview Tips</a>
-                  <a href="/resume-builder"><i className="fas fa-chevron-right"></i> Resume Builder</a>
-                  <a href="/learning-hub"><i className="fas fa-chevron-right"></i> Learning Hub</a>
-                </div>
-                <div className="footer-col">
-                  <h4>Legal & Help</h4>
-                  <a href="#"><i className="fas fa-chevron-right"></i> Privacy Policy</a>
-                  <a href="#"><i className="fas fa-chevron-right"></i> Terms of Service</a>
-                  <a href="#"><i className="fas fa-chevron-right"></i> Help Center</a>
-                  <a href="#"><i className="fas fa-chevron-right"></i> Contact Us</a>
-                </div>
-              </div>
+
             </div>
 
             <div className="footer-bottom-v2">
               <div className="container bottom-flex">
-                <p>&copy; 2026 ViteHire Technologies. Build with passion in Abeokuta.</p>
+                <p>&copy; 2026 ViteHire Technologies. Built with passion in Nigeria.</p>
                 <div className="bottom-links">
                   <a href="#">Sitemap</a>
                   <a href="#">Cookies</a>

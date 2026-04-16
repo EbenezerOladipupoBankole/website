@@ -13,7 +13,7 @@ const ResumeBuilder: React.FC = () => {
                     </div>
                     <h2>Build Your Resume for Free</h2>
                     <p style={{ color: 'var(--text-secondary)', maxWidth: '500px', margin: '0 auto' }}>
-                        Our AI-powered resume builder helps you highlight your skills and experience to stand out to employers in Abeokuta.
+                        Our AI-powered resume builder helps you highlight your skills and experience to stand out to employers across Nigeria.
                     </p>
 
                     <div style={{ display: 'flex', gap: '16px', marginTop: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>

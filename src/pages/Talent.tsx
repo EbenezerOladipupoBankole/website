@@ -6,7 +6,7 @@ const Talent: React.FC = () => {
         fullName: '',
         email: '',
         phone: '',
-        location: 'Abeokuta', // Not used in backend explicitly yet, but could be part of bio
+        location: 'Lagos', // Not used in backend explicitly yet, but could be part of bio
         role: '', // -> Category in backend
         experience: 'Entry Level', // Not used in backend explicitly
         bio: '', // -> skillsSummary in backend
@@ -98,7 +98,7 @@ ${formData.bio}
                         className="btn-primary"
                         onClick={() => {
                             setIsSuccess(false);
-                            setFormData({ fullName: '', email: '', phone: '', location: 'Abeokuta', role: '', experience: 'Entry Level', bio: '', category: 'IT & Software' });
+                            setFormData({ fullName: '', email: '', phone: '', location: 'Lagos', role: '', experience: 'Entry Level', bio: '', category: 'IT & Software' });
                             setSkills([]);
                             setCvFile(null);
                         }}
@@ -115,7 +115,7 @@ ${formData.bio}
             <div className="container" style={{ maxWidth: '900px' }}>
                 <header style={{ marginBottom: '40px', textAlign: 'center' }}>
                     <h1 className="page-title">Join the Talent Pool</h1>
-                    <p className="page-subtitle">Create your profile and let top Abeokuta companies compete for you.</p>
+                    <p className="page-subtitle">Create your profile and let top companies across Nigeria compete for you.</p>
                 </header>
 
                 <div className="card glass" style={{ padding: '0', overflow: 'hidden' }}>
@@ -134,7 +134,6 @@ ${formData.bio}
                                     required
                                     value={formData.fullName}
                                     onChange={e => setFormData({ ...formData, fullName: e.target.value })}
-                                    placeholder="e.g. Adewale Johnson"
                                     style={{ padding: '16px 20px', borderRadius: '12px', border: '1px solid var(--border)', fontSize: '16px', outline: 'none' }}
                                 />
                             </div>
@@ -145,7 +144,6 @@ ${formData.bio}
                                     required
                                     value={formData.email}
                                     onChange={e => setFormData({ ...formData, email: e.target.value })}
-                                    placeholder="e.g. adewale@example.com"
                                     style={{ padding: '16px 20px', borderRadius: '12px', border: '1px solid var(--border)', fontSize: '16px', outline: 'none' }}
                                 />
                             </div>
@@ -159,7 +157,6 @@ ${formData.bio}
                                     required
                                     value={formData.phone}
                                     onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                                    placeholder="e.g. 08012345678"
                                     style={{ padding: '16px 20px', borderRadius: '12px', border: '1px solid var(--border)', fontSize: '16px', outline: 'none' }}
                                 />
                             </div>
@@ -170,11 +167,13 @@ ${formData.bio}
                                     onChange={e => setFormData({ ...formData, location: e.target.value })}
                                     style={{ padding: '16px 20px', borderRadius: '12px', border: '1px solid var(--border)', fontSize: '16px', outline: 'none', background: 'white' }}
                                 >
-                                    <option>Abeokuta</option>
                                     <option>Lagos</option>
+                                    <option>Abuja</option>
+                                    <option>Port Harcourt</option>
                                     <option>Ibadan</option>
-                                    <option>Sagamu</option>
-                                    <option>Ijebu Ode</option>
+                                    <option>Kano</option>
+                                    <option>Abeokuta</option>
+                                    <option>Enugu</option>
                                     <option>Other</option>
                                 </select>
                             </div>
@@ -222,7 +221,6 @@ ${formData.bio}
                                 required
                                 value={formData.role}
                                 onChange={e => setFormData({ ...formData, role: e.target.value })}
-                                placeholder="e.g. Sales Specialist"
                                 style={{ padding: '16px 20px', borderRadius: '12px', border: '1px solid var(--border)', fontSize: '16px', outline: 'none' }}
                             />
                         </div>
@@ -234,7 +232,6 @@ ${formData.bio}
                                 value={skillInput}
                                 onChange={e => setSkillInput(e.target.value)}
                                 onKeyDown={handleAddSkill}
-                                placeholder="e.g. Excel, Customer Service, React..."
                                 style={{ padding: '16px 20px', borderRadius: '12px', border: '1px solid var(--border)', fontSize: '16px', outline: 'none' }}
                             />
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '12px' }}>
@@ -287,7 +284,6 @@ ${formData.bio}
                                 rows={6}
                                 value={formData.bio}
                                 onChange={e => setFormData({ ...formData, bio: e.target.value })}
-                                placeholder="Tell us about your professional journey, achievements, and what you’re looking for..."
                                 style={{ padding: '16px 20px', borderRadius: '12px', border: '1px solid var(--border)', fontSize: '16px', fontFamily: 'inherit', resize: 'vertical', outline: 'none', lineHeight: 1.6 }}
                             />
                         </div>

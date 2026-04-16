@@ -4,8 +4,8 @@ const CareerBlogs: React.FC = () => {
     const blogs = [
         {
             id: 1,
-            title: "Top 10 Skills Employers in Abeokuta Are Looking For",
-            excerpt: "Discover the most in-demand skills that can help you land your dream job in the Rock City.",
+            title: "Top 10 Skills Employers in Nigeria Are Looking For",
+            excerpt: "Discover the most in-demand skills that can help you land your dream job in Nigeria.",
             date: "Oct 12, 2025",
             author: "ViteHire Team"
         },

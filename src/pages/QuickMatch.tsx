@@ -91,7 +91,7 @@ const QuickMatch: React.FC = () => {
                 <div className="empty-state">
                     <i className="fas fa-search"></i>
                     <h2>No more jobs to swipe!</h2>
-                    <p>Check back later for new opportunities in Abeokuta.</p>
+                    <p>Check back later for new opportunities across Nigeria.</p>
                     <button className="btn-primary" onClick={() => navigate('/jobs')} style={{ marginTop: '24px' }}>
                         Browse All Jobs
                     </button>
@@ -122,7 +122,7 @@ const QuickMatch: React.FC = () => {
                     <div className="match-details">
                         <div className="match-detail-item">
                             <i className="fas fa-map-marker-alt"></i>
-                            <span>Abeokuta, Ogun</span>
+                            <span>Nigeria</span>
                         </div>
                         <div className="match-detail-item">
                             <i className="fas fa-briefcase"></i>

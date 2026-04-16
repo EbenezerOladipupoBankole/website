@@ -10,7 +10,7 @@ interface Talent {
     category: string;
     skillsSummary: string; // Backend stores summary text, we might need to parse or display as is
     cvPath: string;
-    createdAt: string;
+    createdAt: any;
 }
 
 const BrowseTalent: React.FC = () => {
@@ -63,7 +63,7 @@ const BrowseTalent: React.FC = () => {
             <div className="container">
                 <header style={{ marginBottom: '40px' }}>
                     <h1 className="page-title">Browse Talent Pool</h1>
-                    <p className="page-subtitle">Discover and hire the best professionals in Abeokuta.</p>
+                    <p className="page-subtitle">Discover and hire the best professionals across Nigeria.</p>
                 </header>
 
                 {/* Filter Bar */}
@@ -72,7 +72,7 @@ const BrowseTalent: React.FC = () => {
                         <i className="fas fa-search" style={{ color: 'var(--accent)', fontSize: '18px' }}></i>
                         <input
                             type="text"
-                            placeholder="Search by candidate name or skills..."
+                            
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             style={{ fontSize: '18px', padding: '16px' }}
@@ -156,8 +156,8 @@ const BrowseTalent: React.FC = () => {
                                 </div>
 
                                 <div style={{ display: 'flex', gap: '12px', fontSize: '14px', color: 'var(--text-muted)' }}>
-                                    <span>📍 Abeokuta</span>
-                                    <span>Joined: {new Date(talent.createdAt).toLocaleDateString()}</span>
+                                    <span>Nigeria</span>
+                                    <span>Joined: {talent.createdAt?.seconds ? new Date(talent.createdAt.seconds * 1000).toLocaleDateString() : 'Recent'}</span>
                                 </div>
 
                                 <p style={{ lineHeight: 1.5, color: 'var(--text-secondary)', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
@@ -223,7 +223,7 @@ const BrowseTalent: React.FC = () => {
                                 <h2 style={{ fontSize: '32px', marginBottom: '8px' }}>{selectedProfile.fullName}</h2>
                                 <p style={{ fontSize: '20px', color: 'var(--accent)', fontWeight: 600 }}>{selectedProfile.category}</p>
                                 <div style={{ display: 'flex', gap: '16px', marginTop: '8px', color: 'var(--text-secondary)' }}>
-                                    <span>📍 Abeokuta</span>
+                                    <span>Nigeria</span>
                                     <span>📧 {selectedProfile.email}</span>
                                 </div>
                             </div>

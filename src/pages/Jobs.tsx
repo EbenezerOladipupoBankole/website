@@ -11,10 +11,14 @@ interface Job {
     jobType: string;
     category: string;
     requirements: string;
-    createdAt: string;
+    createdAt: any;
 }
 
-const Jobs: React.FC = () => {
+interface JobsProps {
+    userRole?: 'talent' | 'employer' | null;
+}
+
+const Jobs: React.FC<JobsProps> = ({ userRole }) => {
     const [jobs, setJobs] = useState<Job[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -102,7 +106,7 @@ const Jobs: React.FC = () => {
             <div className="container">
                 <header style={{ marginBottom: '40px' }}>
                     <h1 className="page-title">Discover Opportunities</h1>
-                    <p className="page-subtitle">Find the perfect role that matches your skills in Abeokuta.</p>
+                    <p className="page-subtitle">Find the perfect role that matches your skills across Nigeria.</p>
                 </header>
 
                 {/* Search Bar */}
@@ -111,7 +115,7 @@ const Jobs: React.FC = () => {
                         <i className="fas fa-search" style={{ color: 'var(--accent)', fontSize: '18px' }}></i>
                         <input
                             type="text"
-                            placeholder="Search job title, company, or keywords..."
+
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             style={{ fontSize: '18px', padding: '16px' }}
@@ -138,7 +142,7 @@ const Jobs: React.FC = () => {
                             }}
                         >
                             <option>All Locations</option>
-                            <option>Abeokuta</option>
+                            <option>Anywhere</option>
                         </select>
                     </div>
 
@@ -179,7 +183,7 @@ const Jobs: React.FC = () => {
                                         fontWeight: 600
                                     }}>{job.jobType}</span>
                                     <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
-                                        {new Date(job.createdAt).toLocaleDateString()}
+                                        {job.createdAt?.seconds ? new Date(job.createdAt.seconds * 1000).toLocaleDateString() : 'Recent'}
                                     </span>
                                 </div>
 
@@ -190,7 +194,7 @@ const Jobs: React.FC = () => {
 
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px', color: 'var(--text-muted)', marginTop: '4px' }}>
                                     <span>📍</span>
-                                    Abeokuta
+                                    Nigeria
                                 </div>
 
                                 <div style={{ marginTop: '12px', paddingTop: '16px', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -235,7 +239,7 @@ const Jobs: React.FC = () => {
                         <div style={{ padding: '32px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
                             <div>
                                 <h2 style={{ fontSize: '28px', marginBottom: '8px', color: 'var(--primary)' }}>{selectedJob.title}</h2>
-                                <p style={{ fontSize: '18px', color: 'var(--text-secondary)' }}>{selectedJob.companyName} • Abeokuta</p>
+                                <p style={{ fontSize: '18px', color: 'var(--text-secondary)' }}>{selectedJob.companyName} • Nigeria</p>
                             </div>
                             <button onClick={() => setSelectedJob(null)} style={{ background: 'var(--surface-secondary)', border: 'none', width: '40px', height: '40px', borderRadius: '50%', fontSize: '20px', cursor: 'pointer', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>
                         </div>
@@ -254,13 +258,19 @@ const Jobs: React.FC = () => {
                                     </div>
 
                                     <div style={{ borderTop: '1px solid var(--border)', paddingTop: '32px' }}>
-                                        <button 
-                                            onClick={() => setIsApplying(true)}
-                                            className="btn-primary"
-                                            style={{ width: '100%', padding: '16px', fontSize: '16px', borderRadius: '14px' }}
-                                        >
-                                            Apply for this Role
-                                        </button>
+                                        {userRole === 'employer' ? (
+                                            <div style={{ background: 'var(--surface-secondary)', padding: '16px', borderRadius: '12px', textAlign: 'center', color: 'var(--text-secondary)' }}>
+                                                Employers cannot apply for jobs. Navigate to your dashboard to manage your postings.
+                                            </div>
+                                        ) : (
+                                            <button 
+                                                onClick={() => setIsApplying(true)}
+                                                className="btn-primary"
+                                                style={{ width: '100%', padding: '16px', fontSize: '16px', borderRadius: '14px' }}
+                                            >
+                                                Apply for this Role
+                                            </button>
+                                        )}
                                     </div>
                                 </>
                             ) : formSuccess ? (
@@ -326,7 +336,7 @@ const Jobs: React.FC = () => {
                                         <input 
                                             type="tel" 
                                             required
-                                            placeholder="e.g. 08012345678"
+
                                             className="search-input"
                                             value={appData.phone}
                                             onChange={e => setAppData({...appData, phone: e.target.value})}

@@ -6,9 +6,10 @@ import type { User } from 'firebase/auth';
 
 interface NavbarProps {
     user: User | null;
+    userRole: 'talent' | 'employer' | null;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ user }) => {
+const Navbar: React.FC<NavbarProps> = ({ user, userRole }) => {
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const location = useLocation();
@@ -36,9 +37,10 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
     };
 
     const isHomePage = location.pathname === '/';
+    const isAuthPage = location.pathname === '/login';
 
-    // Don't show Navbar on Gateway page if not logged in
-    if (!user && isHomePage) {
+    // Don't show Navbar on Gateway or Auth pages if not logged in
+    if (!user && (isHomePage || isAuthPage)) {
         return null;
     }
 
@@ -49,45 +51,67 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
                     <img src="/logo.svg" alt="ViteHire Logo" className="brand-logo-img" style={{ height: '40px' }} />
                 </Link>
 
-                {/* Mobile Toggle - Only show if logged in or on allowed pages */}
-                {user && (
-                    <button className="mobile-toggle" onClick={() => setMenuOpen(!menuOpen)}>
-                        <i className={`fas ${menuOpen ? 'fa-times' : 'fa-bars'}`}></i>
-                    </button>
-                )}
+                {/* Only show menu and actions if user is logged in */}
+                {user ? (
+                    <>
+                        <button className="mobile-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+                            <i className={`fas ${menuOpen ? 'fa-times' : 'fa-bars'}`}></i>
+                        </button>
 
-                <div className={`nav-links ${menuOpen ? 'nav-links-open' : ''}`}>
-                    {user && (
-                        <>
-                            <Link to="/jobs" className={location.pathname === '/jobs' ? 'active' : ''}>Find Jobs</Link>
-                            <Link to="/talent" className={location.pathname === '/talent' ? 'active' : ''}>Join Talent</Link>
-                            <Link to="/employers" className={location.pathname === '/employers' ? 'active' : ''}>For Employers</Link>
-                            <Link to="/learning-hub" className={location.pathname === '/learning-hub' ? 'active' : ''}>French Hub</Link>
-                            <Link to="/match" className={`match-link ${location.pathname === '/match' ? 'active' : ''}`}>
-                                Match <span className="new-badge">Beta</span>
-                            </Link>
-                        </>
-                    )}
+                        <div className={`nav-links ${menuOpen ? 'nav-links-open' : ''}`}>
+                            {/* Talent-specific links */}
+                            {userRole === 'talent' && (
+                                <>
+                                    <Link to="/jobs" className={location.pathname === '/jobs' ? 'active' : ''}>Find Jobs</Link>
+                                    <Link to="/match" className={`match-link ${location.pathname === '/match' ? 'active' : ''}`}>
+                                        Match <span className="new-badge">Beta</span>
+                                    </Link>
+                                    <Link to="/talent" className={location.pathname === '/talent' ? 'active' : ''}>My Profile</Link>
+                                </>
+                            )}
 
-                    {/* Only visible in mobile menu */}
-                    {user && (
-                        <div className="mobile-actions">
-                            <span style={{ padding: '8px', fontWeight: 600 }}>Hi, {user.displayName?.split(' ')[0]}</span>
-                            <button onClick={handleLogout} className="btn-secondary" style={{ width: '100%' }}>Logout</button>
-                            <Link to="/post-job" className="btn-primary" style={{ display: 'inline-block', textAlign: 'center', textDecoration: 'none' }}>Post a Job</Link>
+                            {/* Employer-specific links */}
+                            {userRole === 'employer' && (
+                                <>
+                                    <Link to="/browse-talent" className={location.pathname === '/browse-talent' ? 'active' : ''}>Browse Talent</Link>
+                                    <Link to="/employers" className={location.pathname === '/employers' ? 'active' : ''}>Dashboard</Link>
+                                </>
+                            )}
+
+                            {/* Shared links */}
+
+                            <div className="mobile-actions">
+                                <div className="user-profile-nav">
+                                    {user.photoURL ? (
+                                        <img src={user.photoURL} alt={user.displayName || 'User'} className="nav-profile-img" />
+                                    ) : (
+                                        <div className="nav-profile-placeholder">{user.displayName?.charAt(0)}</div>
+                                    )}
+                                </div>
+                                <button onClick={handleLogout} className="btn-secondary" style={{ width: '100%' }}>Logout</button>
+                                {userRole === 'employer' && (
+                                    <Link to="/post-job" className="btn-primary" style={{ display: 'inline-block', textAlign: 'center', textDecoration: 'none' }}>Post a Job</Link>
+                                )}
+                            </div>
                         </div>
-                    )}
-                </div>
 
-                <div className="nav-actions">
-                    {user && (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <span style={{ fontSize: '14px', fontWeight: 600 }}>Hi, {user.displayName?.split(' ')[0]}</span>
-                            <button onClick={handleLogout} className="btn-secondary" style={{ padding: '0.4em 1em', transform: 'skewX(-12deg)' }}>Logout</button>
-                            <Link to="/post-job" className="btn-primary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', padding: '0.6em 1.2em', fontWeight: 600 }}>Post a Job</Link>
+                        <div className="nav-actions">
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                                <div className="user-profile-nav" title={user.displayName || 'User Profile'}>
+                                    {user.photoURL ? (
+                                        <img src={user.photoURL} alt={user.displayName || 'User'} className="nav-profile-img" />
+                                    ) : (
+                                        <div className="nav-profile-placeholder">{user.displayName?.charAt(0)}</div>
+                                    )}
+                                </div>
+                                <button onClick={handleLogout} className="btn-secondary" style={{ padding: '0.4em 1em' }}>Logout</button>
+                                {userRole === 'employer' && (
+                                    <Link to="/post-job" className="btn-primary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', padding: '0.6em 1.2em', fontWeight: 600 }}>Post a Job</Link>
+                                )}
+                            </div>
                         </div>
-                    )}
-                </div>
+                    </>
+                ) : null}
             </div>
 
             {/* Backdrop for mobile menu */}

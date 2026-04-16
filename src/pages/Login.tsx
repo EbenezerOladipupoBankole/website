@@ -107,7 +107,7 @@ const Login: React.FC = () => {
                     <p style={{ textAlign: 'center', color: '#64748b', marginBottom: '32px', fontSize: '15px' }}>
                         {mode === 'login' 
                             ? 'Glad to see you again! Please enter your details.' 
-                            : 'Join the #1 professional community in Abeokuta.'}
+                            : 'Join the #1 professional community in Nigeria.'}
                     </p>
 
                     <form onSubmit={handleAuth} style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
@@ -126,7 +126,7 @@ const Login: React.FC = () => {
                                     id="name"
                                     value={fullName}
                                     onChange={(e) => setFullName(e.target.value)}
-                                    placeholder="e.g. Ebun Joseph"
+
                                     required
                                     style={{
                                         padding: '14px 18px',
@@ -148,7 +148,7 @@ const Login: React.FC = () => {
                                 id="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                placeholder="name@example.com"
+
                                 required
                                 style={{
                                     padding: '14px 18px',
@@ -169,7 +169,7 @@ const Login: React.FC = () => {
                                 id="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                placeholder="••••••••"
+
                                 required
                                 style={{
                                     padding: '14px 18px',

@@ -2,8 +2,8 @@ import React from 'react';
 
 const LearningHub: React.FC = () => {
     const courses = [
-        { title: "French for Absolute Beginners (A1)", provider: "Alliance Française d'Abeokuta", duration: "12 Weeks", level: "Beginner" },
-        { title: "Intermediate French Conversation (B1)", provider: "Alliance Française d'Abeokuta", duration: "8 Weeks", level: "Intermediate" },
+        { title: "French for Absolute Beginners (A1)", provider: "Alliance Française Nigeria", duration: "12 Weeks", level: "Beginner" },
+        { title: "Intermediate French Conversation (B1)", provider: "Alliance Française Nigeria", duration: "8 Weeks", level: "Intermediate" },
         { title: "Business French Mastery", provider: "Global Talent Hub", duration: "6 Weeks", level: "Advanced" },
         { title: "DELF Exam Preparation", provider: "L'école de Français", duration: "4 Weeks", level: "Test Prep" }
     ];

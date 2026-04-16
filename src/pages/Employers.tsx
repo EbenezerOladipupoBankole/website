@@ -7,7 +7,7 @@ const Employers: React.FC = () => {
             <div className="container">
                 <header style={{ marginBottom: '60px', textAlign: 'center', maxWidth: '800px', margin: '0 auto 60px' }}>
                     <h1 className="page-title" style={{ fontSize: '48px' }}>Hire Top Local Talent</h1>
-                    <p className="page-subtitle">Connecting you with the best professionals in Abeokuta, fast.</p>
+                    <p className="page-subtitle">Connecting you with the best professionals across Nigeria, fast.</p>
                 </header>
 
                 <div className="employers-options" style={{
@@ -52,7 +52,7 @@ const Employers: React.FC = () => {
                         <div>
                             <h3 style={{ fontSize: '28px', marginBottom: '12px', fontWeight: 800 }}>Post a Job</h3>
                             <p style={{ fontSize: '16px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-                                Create a job listing in minutes and reach thousands of qualified candidates in Abeokuta immediately.
+                                Create a job listing in minutes and reach thousands of qualified candidates across Nigeria immediately.
                             </p>
                         </div>
 
@@ -129,6 +129,93 @@ const Employers: React.FC = () => {
                         }}>
                             Search Talent Pool
                         </Link>
+                    </div>
+                </div>
+
+                {/* Dashboard Section */}
+                <div style={{ marginTop: '80px', maxWidth: '1000px', margin: '80px auto 0' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+                        <h2 style={{ fontSize: '32px' }}>Your Job Postings</h2>
+                        <Link to="/post-job" className="btn-outline" style={{ padding: '8px 16px', fontSize: '14px', borderRadius: '8px' }}>
+                            + New Job
+                        </Link>
+                    </div>
+
+                    <div style={{ display: 'grid', gap: '20px' }}>
+                        {/* Mock Job Post 1 */}
+                        <div className="card glass" style={{ padding: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+                                    <h3 style={{ fontSize: '20px', margin: 0 }}>Senior React Developer</h3>
+                                    <span style={{ padding: '4px 8px', background: 'rgba(16, 185, 129, 0.1)', color: 'var(--success)', borderRadius: '100px', fontSize: '12px', fontWeight: 600 }}>Active</span>
+                                </div>
+                                <p style={{ color: 'var(--text-secondary)', fontSize: '14px', margin: 0 }}>Posted 2 days ago • IT & Software • Remote</p>
+                            </div>
+                            
+                            <div style={{ display: 'flex', gap: '24px' }}>
+                                <div style={{ textAlign: 'center' }}>
+                                    <div style={{ fontSize: '24px', fontWeight: 800, color: 'var(--primary)' }}>145</div>
+                                    <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Views</div>
+                                </div>
+                                <div style={{ textAlign: 'center' }}>
+                                    <div style={{ fontSize: '24px', fontWeight: 800, color: 'var(--accent)' }}>12</div>
+                                    <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Applicants</div>
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginLeft: '16px' }}>
+                                    <button className="btn-primary" style={{ padding: '8px 16px', fontSize: '13px', minWidth: '120px' }}>View Applicants</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Mock Job Post 2 */}
+                        <div className="card glass" style={{ padding: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+                                    <h3 style={{ fontSize: '20px', margin: 0 }}>Marketing Specialist</h3>
+                                    <span style={{ padding: '4px 8px', background: 'rgba(16, 185, 129, 0.1)', color: 'var(--success)', borderRadius: '100px', fontSize: '12px', fontWeight: 600 }}>Active</span>
+                                </div>
+                                <p style={{ color: 'var(--text-secondary)', fontSize: '14px', margin: 0 }}>Posted 5 days ago • Marketing • Hybrid</p>
+                            </div>
+                            
+                            <div style={{ display: 'flex', gap: '24px' }}>
+                                <div style={{ textAlign: 'center' }}>
+                                    <div style={{ fontSize: '24px', fontWeight: 800, color: 'var(--primary)' }}>320</div>
+                                    <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Views</div>
+                                </div>
+                                <div style={{ textAlign: 'center' }}>
+                                    <div style={{ fontSize: '24px', fontWeight: 800, color: 'var(--accent)' }}>45</div>
+                                    <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Applicants</div>
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginLeft: '16px' }}>
+                                    <button className="btn-primary" style={{ padding: '8px 16px', fontSize: '13px', minWidth: '120px' }}>View Applicants</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {/* Mock Job Post 3 */}
+                        <div className="card glass" style={{ padding: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', opacity: 0.7 }}>
+                            <div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+                                    <h3 style={{ fontSize: '20px', margin: 0 }}>Customer Support Rep</h3>
+                                    <span style={{ padding: '4px 8px', background: 'rgba(100, 116, 139, 0.1)', color: 'var(--text-muted)', borderRadius: '100px', fontSize: '12px', fontWeight: 600 }}>Closed</span>
+                                </div>
+                                <p style={{ color: 'var(--text-secondary)', fontSize: '14px', margin: 0 }}>Posted 3 weeks ago • Custom Service • On-site</p>
+                            </div>
+                            
+                            <div style={{ display: 'flex', gap: '24px' }}>
+                                <div style={{ textAlign: 'center', opacity: 0.6 }}>
+                                    <div style={{ fontSize: '24px', fontWeight: 800, color: 'var(--primary)' }}>512</div>
+                                    <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Views</div>
+                                </div>
+                                <div style={{ textAlign: 'center', opacity: 0.6 }}>
+                                    <div style={{ fontSize: '24px', fontWeight: 800, color: 'var(--accent)' }}>89</div>
+                                    <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Applicants</div>
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginLeft: '16px' }}>
+                                    <button className="btn-outline" style={{ padding: '8px 16px', fontSize: '13px', minWidth: '120px' }}>Archived</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

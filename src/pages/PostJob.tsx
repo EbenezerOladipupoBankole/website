@@ -42,7 +42,7 @@ const PostJob: React.FC = () => {
             <div className="container" style={{ maxWidth: '800px' }}>
                 <header style={{ marginBottom: '40px', textAlign: 'center' }}>
                     <h1 className="page-title">Post a Job</h1>
-                    <p className="page-subtitle">Find your next star employee in Abeokuta.</p>
+                    <p className="page-subtitle">Find your next star employee across Nigeria.</p>
                 </header>
 
                 <div className="card glass">
@@ -54,7 +54,7 @@ const PostJob: React.FC = () => {
                                 required
                                 value={jobData.title}
                                 onChange={e => setJobData({ ...jobData, title: e.target.value })}
-                                placeholder="e.g. Senior React Developer"
+
                                 style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--border)', background: 'rgba(255,255,255,0.8)' }}
                             />
                         </div>
@@ -67,7 +67,7 @@ const PostJob: React.FC = () => {
                                     required
                                     value={jobData.companyName}
                                     onChange={e => setJobData({ ...jobData, companyName: e.target.value })}
-                                    placeholder="e.g. Rock Tech Hub"
+
                                     style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--border)', background: 'rgba(255,255,255,0.8)' }}
                                 />
                             </div>
@@ -111,7 +111,7 @@ const PostJob: React.FC = () => {
                                 required
                                 value={jobData.description}
                                 onChange={e => setJobData({ ...jobData, description: e.target.value })}
-                                placeholder="Describe the role, responsibilities..."
+
                                 style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--border)', background: 'rgba(255,255,255,0.8)', fontFamily: 'inherit' }}
                             />
                         </div>
@@ -123,7 +123,7 @@ const PostJob: React.FC = () => {
                                 required
                                 value={jobData.requirements}
                                 onChange={e => setJobData({ ...jobData, requirements: e.target.value })}
-                                placeholder="- 3+ years experience&#10;- Knowledge of React"
+
                                 style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--border)', background: 'rgba(255,255,255,0.8)', fontFamily: 'inherit' }}
                             />
                         </div>

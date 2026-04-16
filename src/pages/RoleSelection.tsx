@@ -64,7 +64,9 @@ const RoleSelection: React.FC = () => {
         return (
             <div className="page-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '80vh' }}>
                 <div style={{ textAlign: 'center' }}>
-                    <div className="mini-logo animate-pulse" style={{ fontSize: '40px', marginBottom: '20px' }}>🚀</div>
+                    <div style={{ fontSize: '40px', marginBottom: '20px', color: 'var(--accent)' }}>
+                        <i className="fas fa-circle-notch fa-spin"></i>
+                    </div>
                     <p>Preparing your experience...</p>
                 </div>
             </div>
@@ -91,7 +93,7 @@ const RoleSelection: React.FC = () => {
                         <div style={{ fontSize: '48px', marginBottom: '24px' }}>🙋‍♂️</div>
                         <h2>I'm a Talent</h2>
                         <p style={{ color: 'var(--text-secondary)', marginTop: '12px' }}>
-                            I want to find local jobs, build my resume, and match with top employers in Abeokuta.
+                            I want to find jobs, build my resume, and match with top employers across Nigeria.
                         </p>
                     </div>
 
@@ -106,7 +108,7 @@ const RoleSelection: React.FC = () => {
                         <div style={{ fontSize: '48px', marginBottom: '24px' }}>🏢</div>
                         <h2>I'm an Employer</h2>
                         <p style={{ color: 'var(--text-secondary)', marginTop: '12px' }}>
-                            I want to post job openings, find skilled talent, and grow my team in the Rock City.
+                            I want to post job openings, find skilled talent, and grow my team.
                         </p>
                     </div>
                 </div>

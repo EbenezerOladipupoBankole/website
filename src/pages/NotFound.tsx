@@ -15,7 +15,7 @@ const NotFound: React.FC = () => {
             <h1 style={{ fontSize: '120px', color: 'var(--accent)', marginBottom: '0' }}>404</h1>
             <h2 style={{ fontSize: '32px', marginBottom: '16px' }}>Oops! Page Not Found</h2>
             <p style={{ color: 'var(--text-secondary)', maxWidth: '500px', marginBottom: '32px' }}>
-                It looks like the job you're looking for has been filled or the page has moved somewhere else in the Rock City.
+                It looks like the job you're looking for has been filled or the page has moved.
             </p>
             <Link to="/" className="btn-primary" style={{ textDecoration: 'none' }}>
                 Back to Home
